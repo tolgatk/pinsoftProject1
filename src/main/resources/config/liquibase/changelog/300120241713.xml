@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+    <changeSet id="300120241800" author="tolgatok">
+        <createTable tableName="products">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(250)"/>
+            <column name="explanation" type="varchar(250)"/>
+            <column name="price" type="double"/>
+            <column name="category_id" type="bigint">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="300120241801" author="tolgatok">
+        <createTable tableName="categorys">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(250)">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="300120241803" author="tolgatok">
+        <addForeignKeyConstraint
+                baseColumnNames="category_id"
+                baseTableName="products"
+                baseTableSchemaName="public"
+                referencedColumnNames="id"
+                referencedTableName="categorys"
+                referencedTableSchemaName="public"
+                validate="true"
+                constraintName="fk_category_id"/>
+    </changeSet>
+    <changeSet id="300120241804" author="tolgatok">
+        <insert tableName="categorys">
+            <column name="name" value="MANS" />
+        </insert>
+        <insert tableName="categorys">
+            <column name="name" value="KIDS" />
+        </insert>
+    </changeSet>
+    <changeSet id="300120241805" author="tolgatok">
+        <insert tableName="products">
+            <column name="name" value="Pant"/>
+            <column name="explanation" value="A large pant"/>
+            <column name="price" value="100"/>
+            <column name="category_id" value="1">
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
